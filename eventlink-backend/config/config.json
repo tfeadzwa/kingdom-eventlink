@@ -1,0 +1,35 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "L0ck_$77",
+    "database": "eventlink",
+    "host": "localhost",
+    "dialect": "postgres",
+    "define": {
+      "freezeTableName": true,
+      "underscored": true
+    }
+  },
+  "test": {
+    "username": "postgres",
+    "password": "L0ck_$77",
+    "database": "eventlink_test",
+    "host": "localhost",
+    "dialect": "postgres",
+    "define": {
+      "freezeTableName": true,
+      "underscored": true
+    }
+  },
+  "production": {
+    "username": "postgres",
+    "password": "L0ck_$77",
+    "database": "eventlink_prod",
+    "host": "localhost",
+    "dialect": "postgres",
+    "define": {
+      "freezeTableName": true,
+      "underscored": true
+    }
+  }
+}

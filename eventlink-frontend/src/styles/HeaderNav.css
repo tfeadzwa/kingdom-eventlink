@@ -1,0 +1,98 @@
+.header-nav {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 4vw 1rem 4vw;
+  background: linear-gradient(120deg, #f6f7fb 0%, #e9ecf6 100%);
+  position: relative;
+}
+.header-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #222;
+  letter-spacing: 1px;
+  text-decoration: none;
+  margin-bottom: 0.8rem;
+}
+.header-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+.header-nav-link {
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+.header-nav-link-primary {
+  background: #0057ff;
+  color: #fff;
+  font-weight: 600;
+}
+.header-nav-link-primary:hover {
+  background: #003fa3;
+}
+
+.dropdown-menu {
+  min-width: 220px !important;
+  /* You can adjust this value as needed for your design */
+}
+.dropdown-menu .dropdown-item {
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  padding-left: 1.3rem;
+  padding-right: 1.3rem;
+  margin-bottom: 0.15rem;
+}
+.dropdown-menu .dropdown-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 600px) {
+  .header-nav {
+    flex-direction: row;
+    align-items: center;
+    padding: 1.5rem 3vw 1rem 3vw;
+  }
+  .header-logo {
+    font-size: 1.8rem;
+    margin-bottom: 0;
+  }
+  .header-nav-links {
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.5rem;
+    width: auto;
+  }
+  .header-nav-link {
+    text-align: center;
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1024px) {
+  .header-nav {
+    padding: 2rem 4vw 1rem 4vw;
+  }
+  .header-logo {
+    font-size: 2rem;
+  }
+  .header-nav-link {
+    font-size: 1.1rem;
+    padding: 0.5rem 1.5rem;
+  }
+}
