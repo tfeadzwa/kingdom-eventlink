@@ -23,9 +23,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Home from "./pages/Home";
 import TicketConfig from "./pages/TicketConfig";
 import CreateCategory from "./pages/CreateCategory";
-import EventRegistration from "./pages/EventRegistration";
 import React, { Suspense, lazy } from "react";
 import "../fontIcons";
+import NotFound from "./pages/NotFound.jsx";
 
 const BrowseEvents = lazy(() => import("./pages/BrowseEvents"));
 const EventDetails = lazy(() => import("./pages/EventDetails"));
@@ -110,10 +110,7 @@ function AppRoutes() {
           />
           <Route path="/browse-events" element={<BrowseEvents />} />
           <Route path="/event/:eventId" element={<EventDetails />} />
-          <Route
-            path="/event/:eventId/register"
-            element={<EventRegistration />}
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </>

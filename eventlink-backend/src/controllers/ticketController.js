@@ -31,3 +31,15 @@ exports.createTickets = async (req, res) => {
     res.status(500).json({ message: "Failed to create tickets" });
   }
 };
+
+// Get tickets for a specific event
+exports.getTicketsByEvent = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const tickets = await Ticket.findAll({ where: { event_id: eventId } });
+    res.status(200).json({ tickets });
+  } catch (error) {
+    console.error("Error fetching tickets for event:", error);
+    res.status(500).json({ message: "Failed to fetch tickets for event" });
+  }
+};

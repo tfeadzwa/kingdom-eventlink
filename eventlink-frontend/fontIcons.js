@@ -37,6 +37,13 @@ import {
   faTicket,
   faCheckCircle,
   faExclamationCircle,
+  faMinus,
+  faPlus,
+  faCreditCard,
+  faBank,
+  faGauge,
+  faTriangleExclamation,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -76,5 +83,12 @@ library.add(
   faUserPlus,
   faTicket,
   faCheckCircle,
-  faExclamationCircle
+  faExclamationCircle,
+  faMinus,
+  faPlus,
+  faCreditCard,
+  faBank,
+  faGauge,
+  faTriangleExclamation,
+  faArrowLeft
 );

@@ -9,8 +9,12 @@ const {
 const {
   createEvent,
   getAllEvents,
+  getEventById,
 } = require("../controllers/createEventController");
-const { createTickets } = require("../controllers/ticketController");
+const {
+  createTickets,
+  getTicketsByEvent,
+} = require("../controllers/ticketController");
 const {
   createCategory,
   getCategories,
@@ -19,6 +23,9 @@ const {
   authenticate,
   authorizeAdmin,
 } = require("../middleware/authMiddleware");
+const {
+  registerForEvent,
+} = require("../controllers/eventRegistrationController");
 
 const router = express.Router();
 
@@ -42,6 +49,13 @@ router.post("/events", authenticate, authorizeAdmin, createEvent);
 
 // Public event browsing
 router.get("/events", getAllEvents);
+// Get single event by ID
+router.get("/events/:eventId", getEventById);
+// Get tickets for a specific event
+router.get("/events/:eventId/tickets", getTicketsByEvent);
+
+// Register for an event (Authenticated users)
+router.post("/events/:eventId/register", authenticate, registerForEvent);
 
 // Ticket configuration route (Admin Only)
 router.post("/tickets", authenticate, authorizeAdmin, createTickets);

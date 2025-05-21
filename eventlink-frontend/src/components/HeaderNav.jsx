@@ -45,6 +45,14 @@ const HeaderNav = () => {
                 Browse Events
               </Link>
             </li>
+            {user && (
+              <li className="nav-item">
+                <Link to="/dashboard" className="nav-link fw-semibold">
+                  <FontAwesomeIcon icon={["fas", "gauge"]} className="me-1" />{" "}
+                  Dashboard
+                </Link>
+              </li>
+            )}
             {user ? (
               <li className="nav-item dropdown">
                 <button
@@ -60,7 +68,7 @@ const HeaderNav = () => {
                       className="text-primary"
                     />
                   ) : (
-                    <FontAwesomeIcon icon={["fas", "caret-down"]} />
+                    <FontAwesomeIcon icon={["fas", "user-circle"]} />
                   )}
                 </button>
                 <ul

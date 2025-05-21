@@ -108,99 +108,92 @@ const BrowseEvents = () => {
                 className="col-md-6 col-lg-4 d-flex align-items-stretch"
                 key={event.id}
               >
-                <div className="card shadow-sm border-0 w-100 h-100">
-                  <div
-                    className="card-header bg-primary text-white position-relative d-flex align-items-center"
-                    style={{ minHeight: 60 }}
-                  >
-                    <span
-                      className="badge bg-warning text-dark position-absolute top-0 end-0 m-2"
-                      style={{ fontSize: "0.95rem" }}
-                    >
+                <div className="card shadow-lg border-0 w-100 h-100 animate__animated animate__fadeInUp">
+                  <img
+                    src={
+                      event.image
+                        ? event.image.startsWith("http")
+                          ? event.image
+                          : `/uploads/${event.image}`
+                        : eventsHomeImg
+                    }
+                    className="card-img-top object-fit-cover border-bottom"
+                    alt={event.title}
+                    style={{
+                      minHeight: 260,
+                      maxHeight: 320,
+                      objectFit: "cover",
+                      borderTopLeftRadius: 18,
+                      borderTopRightRadius: 18,
+                    }}
+                    onError={(e) => (e.target.src = eventsHomeImg)}
+                  />
+                  <div className="card-body d-flex flex-column h-100">
+                    <span className="badge bg-warning text-dark mb-2">
                       {event.category || "Uncategorized"}
                     </span>
                     <h5
-                      className="mb-0 fw-bold"
-                      style={{ fontSize: "1.25rem", letterSpacing: "-0.5px" }}
+                      className="card-title fw-bold mb-2"
+                      style={{ fontSize: "1.25rem" }}
                     >
                       {event.title}
                     </h5>
-                  </div>
-                  <div className="row g-0">
-                    <div className="col-5">
-                      <div className="h-100 d-flex align-items-center justify-content-center p-2">
-                        <img
-                          src={
-                            event.image
-                              ? event.image.startsWith("http")
-                                ? event.image
-                                : `/uploads/${event.image}`
-                              : eventsHomeImg
-                          }
-                          className="img-fluid rounded"
-                          alt={event.title}
-                          style={{
-                            maxHeight: 140,
-                            objectFit: "cover",
-                            width: "100%",
-                          }}
-                          onError={(e) => (e.target.src = eventsHomeImg)}
-                        />
-                      </div>
+                    <div className="mb-2 text-muted small">
+                      <span className="me-2">
+                        <i className="bi bi-calendar3 me-1"></i>
+                        {event.start_date
+                          ? new Date(event.start_date).toLocaleDateString()
+                          : "-"}
+                      </span>
+                      <span className="me-2">
+                        <i className="bi bi-clock me-1"></i>
+                        {event.start_time || "-"} - {event.end_time || "-"}
+                      </span>
+                      <span className="me-2">
+                        <i className="bi bi-geo-alt-fill me-1"></i>
+                        {event.location}
+                      </span>
+                      <span>
+                        <i className="bi bi-people-fill me-1"></i>
+                        {event.capacity} seats
+                      </span>
                     </div>
-                    <div className="col-7">
-                      <div className="card-body d-flex flex-column h-100">
-                        <div className="mb-2">
-                          <div
-                            className="mb-2 text-muted small"
-                            style={{ fontSize: "0.98rem" }}
-                          >
-                            <span className="me-2">
-                              <FontAwesomeIcon
-                                icon={["fas", "calendar-plus"]}
-                                className="me-1 text-primary"
-                              />
-                              {event.start_date
-                                ? new Date(
-                                    event.start_date
-                                  ).toLocaleDateString()
-                                : "-"}
-                            </span>
-                            <span className="me-2">
-                              <FontAwesomeIcon
-                                icon={["fas", "location-dot"]}
-                                className="me-1 text-secondary"
-                              />
-                              {event.location}
-                            </span>
-                            <span>
-                              <FontAwesomeIcon
-                                icon={["fas", "tag"]}
-                                className="me-1 text-info"
-                              />
-                              {event.type}
-                            </span>
-                          </div>
-                          <p
-                            className="card-text mb-2"
-                            style={{ fontSize: "1.05rem", color: "#444" }}
-                          >
-                            {event.description?.slice(0, 90)}
-                            {event.description && event.description.length > 90
-                              ? "..."
-                              : ""}
-                          </p>
-                        </div>
-                        <div className="mt-auto">
-                          <Link
-                            to={`/event/${event.id}`}
-                            className="btn btn-outline-primary btn-sm fw-semibold px-3"
-                          >
-                            View Details{" "}
-                            <FontAwesomeIcon icon={["fas", "arrow-right"]} />
-                          </Link>
-                        </div>
-                      </div>
+                    <div className="mb-2">
+                      <span className="badge bg-info text-dark me-2">
+                        {event.type?.charAt(0).toUpperCase() +
+                          event.type?.slice(1)}
+                      </span>
+                      {event.visibility ? (
+                        <span className="badge bg-success">Public</span>
+                      ) : (
+                        <span className="badge bg-secondary">Private</span>
+                      )}
+                    </div>
+                    <p
+                      className="card-text mb-2"
+                      style={{ fontSize: "1.05rem", color: "#444" }}
+                    >
+                      {event.description?.slice(0, 90)}
+                      {event.description && event.description.length > 90
+                        ? "..."
+                        : ""}
+                    </p>
+                    <div className="mt-auto">
+                      <Link
+                        to={`/event/${event.id}`}
+                        className="btn btn-primary btn-md fw-semibold shadow-sm rounded-pill d-flex align-items-center justify-content-center gap-2 mt-2"
+                        style={{
+                          letterSpacing: 0.2,
+                          fontSize: "0.98rem",
+                          padding: "0.5rem 1.1rem",
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={["fas", "arrow-right"]}
+                          className="me-1"
+                        />
+                        View Details
+                      </Link>
                     </div>
                   </div>
                 </div>

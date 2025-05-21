@@ -81,3 +81,19 @@
 .register-footer a:hover {
   text-decoration: underline;
 }
+
+.paynow-logo {
+  transition: filter 0.2s, background 0.2s;
+}
+
+.btn-outline-primary:hover .paynow-logo {
+  filter: brightness(0) invert(1);
+}
+
+.payment-summary-card {
+  animation-duration: 0.5s;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+  background: linear-gradient(135deg, #fff 80%, #e3e8ff 100%);
+  border-radius: 28px;
+  border: none;
+}
