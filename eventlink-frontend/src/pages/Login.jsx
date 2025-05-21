@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import notify from "../components/Notify.jsx";
 import "../styles/Register.css"; // Reuse the same CSS for consistent styling
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -52,14 +53,11 @@ const Login = () => {
         <div className="mb-4 text-center">
           <div className="mb-2">
             <span className="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-block mb-2">
-              <svg
-                width="32"
-                height="32"
-                fill="currentColor"
+              <FontAwesomeIcon
+                icon={["fas", "right-to-bracket"]}
+                size="2x"
                 className="text-primary"
-              >
-                <use href="#right-to-bracket" />
-              </svg>
+              />
             </span>
           </div>
           <h2

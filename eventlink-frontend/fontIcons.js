@@ -34,6 +34,9 @@ import {
   faRightFromBracket,
   faRightToBracket,
   faUserPlus,
+  faEnvelopeCircleCheck,
+  faKey,
+  faEnvelopeOpenText,
   faTicket,
   faCheckCircle,
   faExclamationCircle,
@@ -44,6 +47,11 @@ import {
   faGauge,
   faTriangleExclamation,
   faArrowLeft,
+  faFileInvoice,
+  faLayerGroup,
+  faCircleCheck,
+  faCircleXmark,
+  faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -81,6 +89,9 @@ library.add(
   faRightFromBracket,
   faRightToBracket,
   faUserPlus,
+  faEnvelopeCircleCheck,
+  faKey,
+  faEnvelopeOpenText,
   faTicket,
   faCheckCircle,
   faExclamationCircle,
@@ -90,5 +101,10 @@ library.add(
   faBank,
   faGauge,
   faTriangleExclamation,
-  faArrowLeft
+  faArrowLeft,
+  faFileInvoice,
+  faLayerGroup,
+  faCircleCheck,
+  faCircleXmark,
+  faCircleInfo
 );

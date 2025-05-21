@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import notify from "../components/Notify.jsx";
 import "../styles/Register.css"; // Reuse the same CSS for consistent styling
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -56,14 +57,11 @@ const Register = () => {
         <div className="mb-4 text-center">
           <div className="mb-2">
             <span className="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-block mb-2">
-              <svg
-                width="32"
-                height="32"
-                fill="currentColor"
+              <FontAwesomeIcon
+                icon={["fas", "user-plus"]}
+                size="2x"
                 className="text-primary"
-              >
-                <use href="#user-plus" />
-              </svg>
+              />
             </span>
           </div>
           <h2

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../styles/Register.css"; // Reuse the same CSS for consistent styling
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -41,14 +42,11 @@ const ForgotPassword = () => {
         <div className="mb-4 text-center">
           <div className="mb-2">
             <span className="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-block mb-2">
-              <svg
-                width="32"
-                height="32"
-                fill="currentColor"
+              <FontAwesomeIcon
+                icon={["fas", "envelope-open-text"]}
+                size="2x"
                 className="text-primary"
-              >
-                <use href="#envelope" />
-              </svg>
+              />
             </span>
           </div>
           <h2

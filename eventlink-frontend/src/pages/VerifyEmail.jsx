@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams, Link } from "react-router-dom";
 import "../styles/Register.css"; // Reuse the same CSS for consistent styling
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const VerifyEmail = () => {
   const [searchParams] = useSearchParams();
@@ -40,14 +41,11 @@ const VerifyEmail = () => {
         <div className="mb-4 text-center">
           <div className="mb-2">
             <span className="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-block mb-2">
-              <svg
-                width="32"
-                height="32"
-                fill="currentColor"
+              <FontAwesomeIcon
+                icon={["fas", "envelope-circle-check"]}
+                size="2x"
                 className="text-primary"
-              >
-                <use href="#envelope-circle-check" />
-              </svg>
+              />
             </span>
           </div>
           <h2

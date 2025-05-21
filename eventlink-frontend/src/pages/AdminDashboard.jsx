@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Dashboard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const adminFeatures = [
   {
@@ -54,6 +55,10 @@ const AdminDashboard = () => {
       <div className="container py-5" style={{ maxWidth: 1200 }}>
         <div className="text-center mb-5">
           <h1 className="display-4 fw-bold mb-2 text-primary">
+            <FontAwesomeIcon
+              icon={["fas", "gauge"]}
+              className="me-2 text-primary"
+            />{" "}
             Admin Dashboard
           </h1>
           <p

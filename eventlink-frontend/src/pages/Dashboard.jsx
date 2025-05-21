@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Dashboard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const userFeatures = [
   {
@@ -38,14 +39,11 @@ const Dashboard = () => {
       <div className="container py-5" style={{ maxWidth: 1200 }}>
         <div className="text-center mb-5">
           <span className="bg-primary bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
-            <svg
-              width="40"
-              height="40"
-              fill="currentColor"
-              className="text-primary"
-            >
-              <use href="#user" />
-            </svg>
+            <FontAwesomeIcon
+              icon={["fas", "gauge"]}
+              className="me-2 text-primary"
+            />{" "}
+            Dashboard
           </span>
           <h1 className="display-4 fw-bold mb-2 text-primary">
             User Dashboard
