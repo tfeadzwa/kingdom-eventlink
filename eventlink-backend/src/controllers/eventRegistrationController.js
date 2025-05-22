@@ -35,32 +35,34 @@ exports.registerForEvent = async (req, res) => {
     for (const sel of tickets) {
       const dbTicket = dbTickets.find((t) => t.id === sel.ticketId);
       if (!dbTicket || sel.quantity < 1 || dbTicket.available < sel.quantity) {
-        return res
-          .status(400)
-          .json({
-            message: `Not enough tickets available for ${
-              dbTicket?.type || "selected type"
-            }.`,
-          });
+        return res.status(400).json({
+          message: `Not enough tickets available for ${
+            dbTicket?.type || "selected type"
+          }.`,
+        });
       }
     }
 
     // Decrement availability and create registrations
+    const registrationIds = [];
     for (const sel of tickets) {
       const dbTicket = dbTickets.find((t) => t.id === sel.ticketId);
       dbTicket.available -= sel.quantity;
       await dbTicket.save();
-      await Registration.create({
+      const reg = await Registration.create({
         user_id: userId,
         event_id: eventId,
         ticket_id: sel.ticketId,
         quantity: sel.quantity,
       });
+      registrationIds.push(reg.id);
     }
 
-    return res
-      .status(200)
-      .json({ message: "Successfully registered for event." });
+    return res.status(200).json({
+      message: "Successfully registered for event.",
+      registrationIds,
+      registrationId: registrationIds[0], // for single-ticket flows
+    });
   } catch (error) {
     console.error("Registration error:", error);
     return res.status(500).json({ message: "Failed to register for event." });

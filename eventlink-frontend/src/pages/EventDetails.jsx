@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import eventsHomeImg from "../assets/images/events-hole.jpg";
-import paynowLogoBlue from "../assets/images/paynow-logo-blue.svg";
 import { AuthContext } from "../context/AuthContext";
 import notify from "../components/Notify.jsx";
 import "../styles/Register.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Swal from "sweetalert2";
 
 const EventDetails = () => {
   const { eventId } = useParams();
@@ -19,17 +17,7 @@ const EventDetails = () => {
   const [ticketSelections, setTicketSelections] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
-  const [showSummary, setShowSummary] = useState(false);
-  const [selectedBank, setSelectedBank] = useState("");
-  const [paymentLoading, setPaymentLoading] = useState(false);
-
-  const banks = [
-    { code: "fbc", name: "FBC Bank" },
-    { code: "cbz", name: "CBZ Bank" },
-    { code: "stanchart", name: "Standard Chartered" },
-    { code: "ecobank", name: "Ecobank" },
-    { code: "bancabc", name: "BancABC" },
-  ];
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEventAndTickets = async () => {
@@ -73,188 +61,28 @@ const EventDetails = () => {
     }, 0)
     .toFixed(2);
 
-  const PaymentSummaryOverlay = () => (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        background: "rgba(30, 34, 90, 0.70)",
-        zIndex: 99999,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backdropFilter: "blur(3px)",
-      }}
-    >
-      <div
-        className="card shadow-lg animate__animated animate__fadeInDown payment-summary-card border-0"
-        style={{
-          minWidth: 370,
-          maxWidth: 700,
-          width: "100%",
-          maxHeight: "96vh",
-          overflowY: "auto",
-          borderRadius: 36,
-          background: "linear-gradient(135deg, #f8fafc 80%, #e3e8ff 100%)",
-          boxShadow: "0 12px 48px 0 rgba(31, 38, 135, 0.25)",
-          padding: 0,
-        }}
-      >
-        <div className="p-5 pb-0" style={{ borderRadius: 36, minWidth: 340 }}>
-          <div className="d-flex align-items-center justify-content-between mb-3">
-            <h2
-              className="fw-bold text-primary mb-0"
-              style={{ letterSpacing: 0.5, fontSize: "2.1rem" }}
-            >
-              Payment Summary
-            </h2>
-            <button
-              className="btn btn-link text-danger fs-3 p-0"
-              style={{ textDecoration: "none" }}
-              onClick={() => setShowSummary(false)}
-              disabled={paymentLoading}
-              aria-label="Close payment summary"
-            >
-              <i className="bi bi-x-lg"></i>
-            </button>
-          </div>
-          <div className="mb-4 pb-3 border-bottom">
-            <div className="d-flex justify-content-between mb-2">
-              <span className="fw-semibold text-secondary fs-5">Event:</span>
-              <span className="fw-semibold fs-5">{event.title}</span>
-            </div>
-            {ticketSelections
-              .filter((sel) => sel.quantity > 0)
-              .map((sel) => {
-                const ticket = tickets.find((t) => t.id === sel.ticketId);
-                if (!ticket) return null;
-                return (
-                  <div
-                    key={sel.ticketId}
-                    className="d-flex justify-content-between align-items-center rounded px-3 py-2 mb-2"
-                    style={{
-                      background: "#f6f8ff",
-                      border: "1px solid #e3e8ff",
-                      fontSize: "1.13rem",
-                    }}
-                  >
-                    <span className="fw-semibold text-primary">
-                      {ticket.type}
-                    </span>
-                    <span className="text-dark">
-                      {sel.quantity} x{" "}
-                      <span className="fw-bold">${ticket.price}</span> =
-                      <span className="ms-1 text-success fw-bold">
-                        ${(Number(ticket.price) * sel.quantity).toFixed(2)}
-                      </span>
-                    </span>
-                  </div>
-                );
-              })}
-            <div className="d-flex justify-content-between border-top pt-4 fs-4 mt-4">
-              <span className="fw-bold text-dark">Total Price:</span>
-              <span className="text-success fw-bold fs-3">${totalPrice}</span>
-            </div>
-          </div>
-          <h4 className="fw-bold mb-4 text-center text-primary">
-            Choose Payment Platform
-          </h4>
-          <div className="d-flex flex-column flex-md-row gap-4 justify-content-center mb-5">
-            <button
-              className="btn btn-outline-primary btn-lg flex-grow-1 d-flex flex-column align-items-center justify-content-center gap-2 shadow-sm py-3"
-              style={{
-                borderRadius: 18,
-                fontWeight: 600,
-                fontSize: "1.15rem",
-                minHeight: 110,
-              }}
-              onClick={async () => {
-                setShowSummary(false);
-                setPaymentLoading(true);
-                await new Promise((r) => setTimeout(r, 1800));
-                await handleSubmit();
-                setPaymentLoading(false);
-                Swal.fire({
-                  icon: "success",
-                  title: "Payment Complete!",
-                  text: "You have been registered after payment.",
-                  confirmButtonColor: "#3085d6",
-                });
-              }}
-              disabled={submitting || paymentLoading}
-            >
-              <img
-                src={paynowLogoBlue}
-                alt="PayNow"
-                style={{ height: 38, marginBottom: 8 }}
-                className="paynow-logo"
-              />
-              <span style={{ fontWeight: 700 }}>Pay with PayNow</span>
-            </button>
-            <div className="flex-grow-1">
-              <button
-                className="btn btn-outline-secondary btn-lg w-100 fw-bold d-flex flex-column align-items-center justify-content-center gap-2 shadow-sm py-3"
-                style={{
-                  borderRadius: 18,
-                  fontWeight: 600,
-                  fontSize: "1.15rem",
-                  minHeight: 110,
-                }}
-                disabled
-              >
-                <FontAwesomeIcon
-                  icon={["fas", "bank"]}
-                  style={{ fontSize: 36, marginBottom: 8 }}
-                />
-                <span>Bank Transfer</span>
-                <span
-                  className="text-warning mt-2"
-                  style={{ fontSize: 15, fontWeight: 500 }}
-                >
-                  Coming Soon
-                </span>
-              </button>
-            </div>
-            <button
-              className="btn btn-outline-secondary btn-lg flex-grow-1 d-flex flex-column align-items-center justify-content-center gap-2 shadow-sm py-3"
-              style={{
-                borderRadius: 18,
-                fontWeight: 600,
-                fontSize: "1.15rem",
-                minHeight: 110,
-              }}
-              disabled
-            >
-              <FontAwesomeIcon
-                icon={["fas", "credit-card"]}
-                style={{ fontSize: 36, marginBottom: 8 }}
-              />
-              <span>Card</span>
-              <span
-                className="text-warning mt-2"
-                style={{ fontSize: 15, fontWeight: 500 }}
-              >
-                Coming Soon
-              </span>
-            </button>
-          </div>
-          {paymentLoading && (
-            <div className="text-center mt-4 mb-2">
-              <span
-                className="spinner-border text-primary"
-                role="status"
-                style={{ width: 36, height: 36 }}
-              />
-              <div className="fw-semibold mt-3 fs-5">Processing payment...</div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+  const handleProceedToPayment = () => {
+    if (ticketSelections.some((sel) => sel.quantity > 0)) {
+      // Build an array of selected ticket objects with type, price, and quantity
+      const selectedTickets = ticketSelections
+        .filter((sel) => sel.quantity > 0)
+        .map((sel) => {
+          const ticket = tickets.find((t) => t.id === sel.ticketId);
+          return {
+            type: ticket?.type || "",
+            price: ticket?.price || 0,
+            quantity: sel.quantity,
+          };
+        });
+      navigate(`/event/${eventId}/pay`, {
+        state: {
+          tickets: selectedTickets,
+          total: totalPrice,
+          eventTitle: event.title,
+        },
+      });
+    }
+  };
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
@@ -315,6 +143,9 @@ const EventDetails = () => {
       </div>
     );
   if (!event) return null;
+
+  const registrationId = "some-registration-id"; // Replace with actual logic
+  const amount = 10.0; // Replace with actual logic
 
   return (
     <div
@@ -583,25 +414,24 @@ const EventDetails = () => {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    setShowSummary(true);
+                    handleProceedToPayment();
                   }}
                   className="register-form"
                 >
                   <button
-                    type="button"
+                    type="submit"
                     className="btn btn-primary btn-lg w-100 fw-bold shadow-sm rounded-pill d-flex align-items-center justify-content-center gap-2"
                     disabled={
                       submitting ||
                       ticketSelections.every((sel) => sel.quantity === 0)
                     }
                     style={{ fontSize: "1.08rem", letterSpacing: 0.2 }}
-                    onClick={() => setShowSummary(true)}
                   >
                     <FontAwesomeIcon
                       icon={["fas", "ticket"]}
                       className="me-1"
                     />
-                    Show Payment Summary
+                    Proceed to Payment
                   </button>
                 </form>
               ) : (
@@ -620,7 +450,6 @@ const EventDetails = () => {
           </div>
         </div>
       </div>
-      {showSummary && <PaymentSummaryOverlay />}
     </div>
   );
 };

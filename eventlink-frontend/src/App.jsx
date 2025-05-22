@@ -4,6 +4,7 @@ import {
   Route,
   useNavigate,
   useLocation,
+  useParams,
 } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
@@ -26,9 +27,25 @@ import CreateCategory from "./pages/CreateCategory";
 import React, { Suspense, lazy } from "react";
 import "../fontIcons";
 import NotFound from "./pages/NotFound.jsx";
+import EventRegistration from "./pages/EventRegistration";
+import PayEventRegistration from "./pages/PayEventRegistration";
 
 const BrowseEvents = lazy(() => import("./pages/BrowseEvents"));
 const EventDetails = lazy(() => import("./pages/EventDetails"));
+const BrowseVenues = React.lazy(() => import("./pages/BrowseVenues"));
+const CreateVenue = React.lazy(() => import("./pages/CreateVenue"));
+const VenueDetails = React.lazy(() => import("./pages/VenueDetails"));
+
+const PayEventRegistrationWrapper = () => {
+  const { eventId } = useParams();
+  // You should fetch registrationId and amount for the eventId here
+  // For demo, use dummy values:
+  const registrationId = eventId; // Replace with actual registrationId logic
+  const amount = 10.0; // Replace with actual amount logic
+  return (
+    <PayEventRegistration registrationId={registrationId} amount={amount} />
+  );
+};
 
 function AppRoutes() {
   const { user, loading } = useContext(AuthContext);
@@ -110,6 +127,20 @@ function AppRoutes() {
           />
           <Route path="/browse-events" element={<BrowseEvents />} />
           <Route path="/event/:eventId" element={<EventDetails />} />
+          <Route
+            path="/event/:eventId/pay"
+            element={<PayEventRegistrationWrapper />}
+          />
+          <Route path="/browse-venues" element={<BrowseVenues />} />
+          <Route path="/venue/:venueId" element={<VenueDetails />} />
+          <Route
+            path="/admin/create-venue"
+            element={
+              <AdminRoute>
+                <CreateVenue />
+              </AdminRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

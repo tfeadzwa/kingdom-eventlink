@@ -53,6 +53,17 @@ const HeaderNav = () => {
                 </Link>
               </li>
             )}
+            {user && user.role === "admin" && (
+              <li className="nav-item">
+                <Link to="/admin/create-venue" className="nav-link fw-semibold">
+                  <FontAwesomeIcon
+                    icon={["fas", "building"]}
+                    className="me-1"
+                  />
+                  Create Venue
+                </Link>
+              </li>
+            )}
             {user ? (
               <li className="nav-item dropdown">
                 <button
@@ -108,6 +119,18 @@ const HeaderNav = () => {
                         </Link>
                       </li>
                       <li>
+                        <Link
+                          to="/admin/create-venue"
+                          className="dropdown-item"
+                        >
+                          <FontAwesomeIcon
+                            icon={["fas", "building"]}
+                            className="me-2 text-warning"
+                          />{" "}
+                          Create Venue
+                        </Link>
+                      </li>
+                      <li>
                         <hr className="dropdown-divider" />
                       </li>
                     </>
@@ -137,6 +160,18 @@ const HeaderNav = () => {
                         className="me-2"
                       />{" "}
                       Notifications
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="dropdown-item d-flex align-items-center gap-2"
+                      to="/browse-venues"
+                    >
+                      <FontAwesomeIcon
+                        icon={["fas", "building"]}
+                        className="me-2"
+                      />
+                      Browse Venues
                     </Link>
                   </li>
                   <li>

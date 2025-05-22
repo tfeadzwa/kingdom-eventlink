@@ -101,6 +101,23 @@ const Dashboard = () => {
               </div>
             </div>
           ))}
+          <div className="col-md-4 mb-4">
+            <Link to="/browse-venues" className="text-decoration-none">
+              <div className="card shadow-sm border-0 h-100 animate__animated animate__fadeInUp">
+                <div className="card-body d-flex flex-column align-items-center justify-content-center py-4">
+                  <FontAwesomeIcon
+                    icon={["fas", "building"]}
+                    className="mb-3 text-primary"
+                    style={{ fontSize: 36 }}
+                  />
+                  <h5 className="fw-bold mb-2 text-primary">Browse Venues</h5>
+                  <p className="text-secondary mb-0 text-center">
+                    Find and book the perfect venue for your event.
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

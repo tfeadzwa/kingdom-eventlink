@@ -52,6 +52,11 @@ import {
   faCircleCheck,
   faCircleXmark,
   faCircleInfo,
+  faBuilding,
+  faMapMarkerAlt,
+  faConciergeBell,
+  faMoneyBillWave,
+  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -106,5 +111,10 @@ library.add(
   faLayerGroup,
   faCircleCheck,
   faCircleXmark,
-  faCircleInfo
+  faCircleInfo,
+  faBuilding,
+  faMapMarkerAlt,
+  faConciergeBell,
+  faMoneyBillWave,
+  faArrowRight
 );

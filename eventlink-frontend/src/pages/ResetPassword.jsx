@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useSearchParams, Link } from "react-router-dom";
 import "../styles/Register.css"; // Reuse the same CSS for consistent styling
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();

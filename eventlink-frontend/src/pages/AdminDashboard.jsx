@@ -44,6 +44,14 @@ const adminFeatures = [
     btn: "Event Cancellation",
     color: "danger",
   },
+  {
+    icon: "bi-building",
+    title: "Create Venue",
+    desc: "Add new venues for events and bookings.",
+    link: "/admin/create-venue",
+    btn: "Create Venue",
+    color: "success",
+  },
 ];
 
 const AdminDashboard = () => {
@@ -68,6 +76,18 @@ const AdminDashboard = () => {
             Manage events, users, analytics, and more from your admin panel. Use
             the quick actions below to get started.
           </p>
+        </div>
+        <div className="row g-4 mb-4">
+          <div className="col-auto">
+            <Link to="/create-event" className="btn btn-primary fw-bold">
+              + Create Event
+            </Link>
+          </div>
+          <div className="col-auto">
+            <Link to="/admin/create-venue" className="btn btn-success fw-bold">
+              + Create Venue
+            </Link>
+          </div>
         </div>
         <div className="row g-4">
           {adminFeatures.map((f, idx) => (

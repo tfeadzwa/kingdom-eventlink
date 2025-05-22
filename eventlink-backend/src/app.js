@@ -5,6 +5,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 const fileUpload = require("express-fileupload");
 const authRoutes = require("./routes/authRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
+const venueRoutes = require("./routes/venueRoutes");
 const sequelize = require("./config/database");
 const User = require("./models/User");
 
@@ -39,5 +41,7 @@ sequelize
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/venues", venueRoutes);
 
 module.exports = app;
