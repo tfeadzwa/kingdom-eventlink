@@ -119,10 +119,24 @@ const BrowseVenues = () => {
                       <span className="badge bg-success me-2">
                         {venue.availability ? "Available" : "Unavailable"}
                       </span>
-                      <span className="badge bg-secondary">
+                      <span className="badge bg-secondary me-2">
                         {venue.status?.charAt(0).toUpperCase() +
                           venue.status?.slice(1)}
                       </span>
+                      {!venue.availability && (
+                        <span
+                          className="badge bg-danger fw-bold"
+                          style={{
+                            fontSize: "1rem",
+                            fontWeight: 700,
+                            letterSpacing: 0.5,
+                          }}
+                        >
+                          <span style={{ color: "#fff", fontWeight: 700 }}>
+                            Booked
+                          </span>
+                        </span>
+                      )}
                     </div>
                     <p
                       className="card-text mb-2"

@@ -29,12 +29,17 @@ import "../fontIcons";
 import NotFound from "./pages/NotFound.jsx";
 import EventRegistration from "./pages/EventRegistration";
 import PayEventRegistration from "./pages/PayEventRegistration";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
+import MyVenues from "./pages/MyVenues";
+import Settings from "./pages/Settings";
 
 const BrowseEvents = lazy(() => import("./pages/BrowseEvents"));
 const EventDetails = lazy(() => import("./pages/EventDetails"));
 const BrowseVenues = React.lazy(() => import("./pages/BrowseVenues"));
 const CreateVenue = React.lazy(() => import("./pages/CreateVenue"));
 const VenueDetails = React.lazy(() => import("./pages/VenueDetails"));
+const PayVenueBooking = React.lazy(() => import("./pages/PayVenueBooking"));
 
 const PayEventRegistrationWrapper = () => {
   const { eventId } = useParams();
@@ -133,12 +138,24 @@ function AppRoutes() {
           />
           <Route path="/browse-venues" element={<BrowseVenues />} />
           <Route path="/venue/:venueId" element={<VenueDetails />} />
+          <Route path="/venue/:venueId/pay" element={<PayVenueBooking />} />
           <Route
             path="/admin/create-venue"
             element={
               <AdminRoute>
                 <CreateVenue />
               </AdminRoute>
+            }
+          />
+          <Route path="/payment/success" element={<PaymentSuccess />} />
+          <Route path="/payment/cancel" element={<PaymentCancel />} />
+          <Route path="/my-venues" element={<MyVenues />} />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <Settings />
+              </PrivateRoute>
             }
           />
           <Route path="*" element={<NotFound />} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -104,7 +104,40 @@ const CreateVenue = () => {
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(0);
   const [fieldErrors, setFieldErrors] = useState({});
+  const [venueList, setVenueList] = useState([]);
+  const [selectedVenueId, setSelectedVenueId] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch venue list for dropdown
+    axios.get("http://localhost:5000/api/venues/venue-list").then((res) => {
+      setVenueList(res.data.venues || []);
+    });
+  }, []);
+
+  const handleVenueSelect = (e) => {
+    const venueId = e.target.value;
+    setSelectedVenueId(venueId);
+    if (!venueId) return;
+    const venue = venueList.find((v) => String(v.id) === String(venueId));
+    if (venue) {
+      setFormData((prev) => ({
+        ...prev,
+        name: venue.venue_name || "",
+        slug: venue.slug || "",
+        description: venue.description || "",
+        venue_type: venue.venue_type || "",
+        address: venue.venue_address || "",
+        city: "",
+        state: "",
+        country: "",
+        postal_code: "",
+        latitude: venue.latitude || "",
+        longitude: venue.longitude || "",
+        // leave other fields as is
+      }));
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -190,8 +223,8 @@ const CreateVenue = () => {
   const handleNextStep = () => {
     const errors = validateStep(step);
     setFieldErrors(errors);
-    if (Object.keys(errors).length === 0) {
-      setStep((s) => Math.min(stepperGroups.length - 1, s + 1));
+    if (Object.keys(errors).length === 0 && step < stepperGroups.length - 1) {
+      setStep((s) => s + 1);
     }
   };
 
@@ -266,7 +299,17 @@ const CreateVenue = () => {
               ))}
             </div>
             {/* Stepper Form */}
-            <form onSubmit={handleSubmit}>
+            <form
+              onSubmit={handleSubmit}
+              noValidate
+              autoComplete="off"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && step < stepperGroups.length - 1) {
+                  console.log("Prevented Enter submit on step", step);
+                  e.preventDefault();
+                }
+              }}
+            >
               <div className="row g-3">
                 {stepperGroups[step].fields.map((field) => (
                   <div
@@ -276,7 +319,43 @@ const CreateVenue = () => {
                     <label className="form-label fw-semibold">
                       {fieldLabels[field]}
                     </label>
-                    {field === "description" ? (
+                    {field === "name" ? (
+                      <select
+                        className="form-select"
+                        name="name"
+                        value={formData.name}
+                        onChange={(e) => {
+                          handleChange(e);
+                          const venue = venueList.find(
+                            (v) => v.venue_name === e.target.value
+                          );
+                          if (venue) {
+                            setFormData((prev) => ({
+                              ...prev,
+                              name: venue.venue_name || "",
+                              slug: venue.slug || "",
+                              description: venue.description || "",
+                              venue_type: venue.venue_type || "",
+                              address: venue.venue_address || "",
+                              city: "",
+                              state: "",
+                              country: "",
+                              postal_code: "",
+                              latitude: venue.latitude || "",
+                              longitude: venue.longitude || "",
+                              // leave other fields as is
+                            }));
+                          }
+                        }}
+                      >
+                        <option value="">-- Select from venue list --</option>
+                        {venueList.map((venue) => (
+                          <option key={venue.id} value={venue.venue_name}>
+                            {venue.venue_name} ({venue.venue_type})
+                          </option>
+                        ))}
+                      </select>
+                    ) : field === "description" ? (
                       <textarea
                         className="form-control"
                         name="description"
@@ -378,7 +457,7 @@ const CreateVenue = () => {
                   />{" "}
                   Previous
                 </button>
-                {step < stepLabels.length - 1 ? (
+                {step < stepperGroups.length - 1 ? (
                   <button
                     type="button"
                     className="btn btn-primary px-4"

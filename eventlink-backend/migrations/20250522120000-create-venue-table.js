@@ -2,12 +2,12 @@
 
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable("venues", {
+    return queryInterface.createTable("tbl_venues", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       name: {
         type: Sequelize.STRING,
@@ -90,6 +90,6 @@ module.exports = {
     });
   },
   down(queryInterface) {
-    return queryInterface.dropTable("venues");
+    return queryInterface.dropTable("tbl_venues");
   },
 };

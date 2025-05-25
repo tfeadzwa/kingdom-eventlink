@@ -2,11 +2,11 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
 const Venue = sequelize.define(
-  "venues",
+  "tbl_venues",
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     name: {
@@ -87,7 +87,7 @@ const Venue = sequelize.define(
     },
   },
   {
-    tableName: "venues",
+    tableName: "tbl_venues",
     underscored: true,
     timestamps: true,
     createdAt: "created_at",

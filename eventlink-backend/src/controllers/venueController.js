@@ -1,5 +1,6 @@
 const Venue = require("../models/Venue");
 const VenueRegistration = require("../models/VenueRegistration");
+const VenueList = require("../models/VenueList");
 const { Op } = require("sequelize");
 const path = require("path");
 const fs = require("fs");
@@ -136,18 +137,51 @@ exports.createVenueRegistration = async (req, res) => {
         .status(400)
         .json({ message: "Start and end date are required." });
     }
-    // Optionally: check for overlapping bookings here
+    // Check for overlapping bookings for this venue
+    const overlapping = await VenueRegistration.findAll({
+      where: {
+        venue_id: venueId,
+        status: { [Op.not]: "cancelled" },
+        [Op.or]: [
+          {
+            start_date: { [Op.lte]: end_date },
+            end_date: { [Op.gte]: start_date },
+          },
+        ],
+      },
+      order: [["start_date", "ASC"]],
+    });
+    if (overlapping.length > 0) {
+      // Format booked date ranges for the response
+      const bookedRanges = overlapping.map((b) => ({
+        start_date: b.start_date,
+        end_date: b.end_date,
+      }));
+      // Find the latest end_date to suggest when the venue will be free
+      const latestEnd = overlapping.reduce(
+        (max, b) => (b.end_date > max ? b.end_date : max),
+        overlapping[0].end_date
+      );
+      return res.status(409).json({
+        message: "Venue is already booked for the selected dates.",
+        booked: bookedRanges,
+        next_available: latestEnd,
+      });
+    }
+    // No overlap, allow booking
     const registration = await VenueRegistration.create({
       user_id: req.user.id,
       venue_id: venueId,
       start_date,
       end_date,
       notes,
-      status: "pending",
+      status: "booked",
     });
+    // Mark the venue as unavailable
+    await Venue.update({ availability: false }, { where: { id: venueId } });
     res
       .status(201)
-      .json({ message: "Venue booking request submitted.", registration });
+      .json({ message: "Venue booked successfully.", registration });
   } catch (error) {
     console.error("Venue booking error:", error);
     res.status(500).json({ message: "Failed to book venue." });
@@ -166,5 +200,38 @@ exports.getVenueRegistrations = async (req, res) => {
   } catch (error) {
     console.error("Error fetching venue registrations:", error);
     res.status(500).json({ message: "Failed to fetch venue registrations." });
+  }
+};
+
+// Get all venue registrations for the current user (with venue details)
+exports.getMyVenueRegistrations = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const registrations = await VenueRegistration.findAll({
+      where: { user_id: userId },
+      include: [
+        {
+          model: require("../models/Venue"),
+          as: "venue",
+        },
+      ],
+      order: [["created_at", "DESC"]],
+    });
+    res.status(200).json({ registrations });
+  } catch (error) {
+    console.error("Error fetching user venue registrations:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to fetch your venue registrations." });
+  }
+};
+
+// Get all venue list entries (for CreateVenue dropdown)
+exports.getVenueList = async (req, res) => {
+  try {
+    const venues = await VenueList.findAll();
+    res.status(200).json({ venues });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch venue list." });
   }
 };

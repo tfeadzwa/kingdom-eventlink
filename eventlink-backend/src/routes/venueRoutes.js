@@ -10,6 +10,8 @@ const {
   uploadVenueImage,
   createVenueRegistration,
   getVenueRegistrations,
+  getVenueList,
+  getMyVenueRegistrations,
 } = require("../controllers/venueController");
 
 const router = express.Router();
@@ -20,8 +22,14 @@ router.post("/venues", authenticate, authorizeAdmin, createVenue);
 // Public: Get all venues
 router.get("/venues", getAllVenues);
 
+// User: Get all venue registrations for the current user
+router.get("/venues/my-registrations", authenticate, getMyVenueRegistrations);
+
 // Public: Get single venue by ID
 router.get("/venues/:venueId", getVenueById);
+
+// Public: Get all venue list entries (for CreateVenue dropdown)
+router.get("/venue-list", getVenueList);
 
 // Venue image upload
 router.post("/upload-image", authenticate, authorizeAdmin, uploadVenueImage);

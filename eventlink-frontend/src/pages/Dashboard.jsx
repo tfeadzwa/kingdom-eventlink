@@ -21,6 +21,14 @@ const userFeatures = [
     color: "info",
   },
   {
+    icon: "bi-building",
+    title: "My Venues",
+    desc: "View all venues you have booked or registered for.",
+    link: "/my-venues",
+    btn: "View My Venues",
+    color: "danger",
+  },
+  {
     icon: "bi-person-gear",
     title: "Account Settings",
     desc: "Update your profile, password, and notification preferences.",

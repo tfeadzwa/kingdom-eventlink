@@ -4,20 +4,20 @@ module.exports = {
     return queryInterface.createTable("tbl_venue_registration", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       user_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: { model: "users", key: "id" },
         onDelete: "CASCADE",
       },
       venue_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
-        references: { model: "venues", key: "id" },
+        references: { model: "tbl_venues", key: "id" },
         onDelete: "CASCADE",
       },
       start_date: {

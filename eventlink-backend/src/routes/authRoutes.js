@@ -5,6 +5,7 @@ const { verifyEmail } = require("../controllers/emailVerificationController");
 const {
   forgotPassword,
   resetPassword,
+  changePassword,
 } = require("../controllers/passwordResetController");
 const {
   createEvent,
@@ -43,6 +44,9 @@ router.post("/forgot-password", forgotPassword);
 
 // Reset Password route
 router.post("/reset-password", resetPassword);
+
+// Change Password route (authenticated users)
+router.post("/change-password", authenticate, changePassword);
 
 // Event creation route (Admin Only)
 router.post("/events", authenticate, authorizeAdmin, createEvent);

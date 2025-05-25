@@ -1,20 +1,21 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
+const Venue = require("./Venue");
 
 const VenueRegistration = sequelize.define(
   "tbl_venue_registration",
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
     },
     venue_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
     },
     start_date: {
@@ -47,5 +48,7 @@ const VenueRegistration = sequelize.define(
     timestamps: true,
   }
 );
+
+VenueRegistration.belongsTo(Venue, { foreignKey: "venue_id", as: "venue" });
 
 module.exports = VenueRegistration;

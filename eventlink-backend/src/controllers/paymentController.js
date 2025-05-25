@@ -3,15 +3,16 @@ const Payment = require("../models/Payment");
 const { v4: uuidv4 } = require("uuid");
 
 // Set your Paynow integration keys here or use environment variables
-const PAYNOW_INTEGRATION_ID = process.env.PAYNOW_INTEGRATION_ID;
-const PAYNOW_INTEGRATION_KEY = process.env.PAYNOW_INTEGRATION_KEY;
+const PAYNOW_INTEGRATION_ID = process.env.PAYNOW_INTEGRATION_ID || "21007";
+const PAYNOW_INTEGRATION_KEY =
+  process.env.PAYNOW_INTEGRATION_KEY || "d4f153e1-6e93-47be-93cb-928e0b6bf702";
 const paynow = new Paynow(PAYNOW_INTEGRATION_ID, PAYNOW_INTEGRATION_KEY);
 
 paynow.resultUrl =
   process.env.PAYNOW_RESULT_URL ||
-  "https://yourdomain.com/api/payments/status-update";
+  "http://localhost:5000/api/payments/status-update";
 paynow.returnUrl =
-  process.env.PAYNOW_RETURN_URL || "https://yourdomain.com/payment/return";
+  process.env.PAYNOW_RETURN_URL || "http://localhost:5173/payment/success";
 
 // Initiate Ecocash Express Checkout
 exports.initiateEcocashPayment = async (req, res) => {
@@ -30,6 +31,8 @@ exports.initiateEcocashPayment = async (req, res) => {
       status: "Created",
     });
 
+    console.log(payment);
+
     // Create a new payment for Paynow and add ticket items
     let paynowPayment = paynow.createPayment(reference, email || undefined);
     if (Array.isArray(tickets)) {
@@ -42,6 +45,8 @@ exports.initiateEcocashPayment = async (req, res) => {
     } else {
       paynowPayment.add("Event Registration", amount);
     }
+
+    console.log("Paynow Payment:", paynowPayment);
 
     // Initiate mobile based transaction (Ecocash)
     const response = await paynow.sendMobile(paynowPayment, phone, "ecocash");
