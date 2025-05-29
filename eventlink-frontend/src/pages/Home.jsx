@@ -7,6 +7,7 @@ import axios from "axios";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
+  const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -21,7 +22,17 @@ const Home = () => {
         setLoading(false);
       }
     };
+
+    const fetchVenues = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/venues/venues");
+        setVenues(res.data.venues?.slice(0, 3) || []); // Show only 3 featured venues
+      } catch (err) {
+        // Optionally handle venue error
+      }
+    };
     fetchEvents();
+    fetchVenues();
   }, []);
 
   return (
@@ -47,12 +58,19 @@ const Home = () => {
               experiences that matter to you.
             </p>
             <div className="d-flex flex-wrap gap-3 mb-4">
-              <Link
+              {/* <Link
                 to="/browse-events"
                 className="btn btn-primary btn-lg px-4 d-flex align-items-center gap-2 fw-semibold shadow-sm"
               >
                 <FontAwesomeIcon icon={["fas", "calendar-plus"]} /> Browse
                 Events
+              </Link> */}
+              <Link
+                to="/browse-venues"
+                className="btn btn-primary btn-lg px-4 d-flex align-items-center gap-2 fw-semibold shadow-sm"
+              >
+                <FontAwesomeIcon icon={["fas", "calendar-plus"]} /> Browse
+                Venues
               </Link>
               <Link
                 to="/register"
@@ -82,7 +100,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="row mb-4">
+        {/* <div className="row mb-4">
           <div className="col-12 text-start">
             <h2
               className="fw-bold mb-3 text-primary"
@@ -194,20 +212,122 @@ const Home = () => {
               </div>
             ))
           )}
-        </div>
-        <div className="row mt-5">
+        </div> */}
+        {/* Featured Venues Section */}
+        <div className="row mb-4">
           <div className="col-12 text-start">
-            <Link
-              to="/browse-events"
-              className="btn btn-lg btn-outline-primary px-5 py-2 fw-semibold"
+            <h2
+              className="fw-bold mb-3 text-primary"
+              style={{ fontSize: "2.5rem", letterSpacing: "-1px" }}
             >
-              <FontAwesomeIcon
-                icon={["fas", "calendar-plus"]}
-                className="me-2"
-              />
-              View All Events
-            </Link>
+              Featured Venues
+            </h2>
+            <p className="text-secondary mb-4" style={{ fontSize: "1.25rem" }}>
+              Discover some of our top venues for your next event!
+            </p>
           </div>
+        </div>
+        <div className="row g-4">
+          {loading ? (
+            <div className="col-12 text-center py-4">Loading venues...</div>
+          ) : error ? (
+            <div className="col-12 text-danger py-4">{error}</div>
+          ) : venues.length === 0 ? (
+            <div className="col-12 text-center py-4">No venues found.</div>
+          ) : (
+            venues.map((venue) => (
+              <div
+                className="col-md-6 col-lg-4 d-flex align-items-stretch"
+                key={venue.id}
+              >
+                <div className="card shadow-lg border-0 w-100 h-100 animate__animated animate__fadeInUp">
+                  <img
+                    src={venue.image_url || eventsHomeImg}
+                    className="card-img-top object-fit-cover border-bottom"
+                    alt={venue.name}
+                    style={{
+                      minHeight: 220,
+                      maxHeight: 260,
+                      objectFit: "cover",
+                      borderTopLeftRadius: 18,
+                      borderTopRightRadius: 18,
+                    }}
+                    onError={(e) => (e.target.src = eventsHomeImg)}
+                  />
+                  <div className="card-body d-flex flex-column h-100">
+                    <span className="badge bg-info text-dark mb-2">
+                      {venue.venue_type || "Venue"}
+                    </span>
+                    <h5
+                      className="card-title fw-bold mb-2"
+                      style={{ fontSize: "1.25rem" }}
+                    >
+                      {venue.name}
+                    </h5>
+                    <div className="mb-2 text-muted small">
+                      <span className="me-2">
+                        <i className="bi bi-geo-alt-fill me-1"></i>
+                        {venue.city}, {venue.country}
+                      </span>
+                      <span className="me-2">
+                        <i className="bi bi-people-fill me-1"></i>
+                        {venue.guest_capacity} guests
+                      </span>
+                    </div>
+                    <div className="mb-2">
+                      <span className="badge bg-success me-2">
+                        {venue.availability ? "Available" : "Unavailable"}
+                      </span>
+                      <span className="badge bg-secondary me-2">
+                        {venue.status?.charAt(0).toUpperCase() +
+                          venue.status?.slice(1)}
+                      </span>
+                      {!venue.availability && (
+                        <span
+                          className="badge bg-danger fw-bold"
+                          style={{
+                            fontSize: "1rem",
+                            fontWeight: 700,
+                            letterSpacing: 0.5,
+                          }}
+                        >
+                          <span style={{ color: "#fff", fontWeight: 700 }}>
+                            Booked
+                          </span>
+                        </span>
+                      )}
+                    </div>
+                    <p
+                      className="card-text mb-2"
+                      style={{ fontSize: "1.05rem", color: "#444" }}
+                    >
+                      {venue.description?.slice(0, 90)}
+                      {venue.description && venue.description.length > 90
+                        ? "..."
+                        : ""}
+                    </p>
+                    <div className="mt-auto">
+                      <Link
+                        to={`/venue/${venue.id}`}
+                        className="btn btn-primary btn-md fw-semibold shadow-sm rounded-pill d-flex align-items-center justify-content-center gap-2 mt-2"
+                        style={{
+                          letterSpacing: 0.2,
+                          fontSize: "0.98rem",
+                          padding: "0.5rem 1.1rem",
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={["fas", "arrow-right"]}
+                          className="me-1"
+                        />
+                        View Details
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

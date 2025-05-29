@@ -2,8 +2,10 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Button, Form, Row, Col, Alert, Card } from "react-bootstrap";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const Settings = () => {
+  const location = useLocation();
   const { user } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("profile");
   const [form, setForm] = useState({
@@ -38,6 +40,13 @@ const Settings = () => {
       disabled: true,
     },
   ];
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get("tab");
+    if (tab && tab !== activeTab) setActiveTab(tab);
+    // eslint-disable-next-line
+  }, [location.search]);
 
   const handleTabSelect = (k) => {
     setActiveTab(k);

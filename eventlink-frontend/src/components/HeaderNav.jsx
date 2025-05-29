@@ -36,13 +36,22 @@ const HeaderNav = () => {
         </button>
         <div className="collapse navbar-collapse" id="mainNavbar">
           <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/browse-events" className="nav-link fw-semibold">
                 <FontAwesomeIcon
                   icon={["fas", "calendar-plus"]}
                   className="me-1"
                 />{" "}
                 Browse Events
+              </Link>
+            </li> */}
+            <li>
+              <Link
+                className="dropdown-item d-flex align-items-center gap-2"
+                to="/browse-venues"
+              >
+                <FontAwesomeIcon icon={["fas", "building"]} className="me-2" />
+                Browse Venues
               </Link>
             </li>
             {user && (
@@ -53,17 +62,18 @@ const HeaderNav = () => {
                 </Link>
               </li>
             )}
-            {user && user.role === "admin" && (
-              <li className="nav-item">
-                <Link to="/admin/create-venue" className="nav-link fw-semibold">
-                  <FontAwesomeIcon
-                    icon={["fas", "building"]}
-                    className="me-1"
-                  />
-                  Create Venue
-                </Link>
-              </li>
-            )}
+            {user &&
+              user.role === "admin" &&
+              // <li className="nav-item">
+              //   <Link to="/admin/create-venue" className="nav-link fw-semibold">
+              //     <FontAwesomeIcon
+              //       icon={["fas", "building"]}
+              //       className="me-1"
+              //     />
+              //     Create Venue
+              //   </Link>
+              // </li>
+              null}
             {user ? (
               <li className="nav-item dropdown">
                 <button
@@ -97,7 +107,7 @@ const HeaderNav = () => {
                           Admin Dashboard
                         </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <Link to="/create-event" className="dropdown-item">
                           <FontAwesomeIcon
                             icon={["fas", "calendar-plus"]}
@@ -105,7 +115,7 @@ const HeaderNav = () => {
                           />{" "}
                           Create Event
                         </Link>
-                      </li>
+                      </li> */}
                       <li>
                         <Link
                           to="/admin/create-ticket"
@@ -136,7 +146,7 @@ const HeaderNav = () => {
                     </>
                   )}
                   <li>
-                    <Link to="/profile" className="dropdown-item">
+                    <Link to="/settings?tab=profile" className="dropdown-item">
                       <FontAwesomeIcon
                         icon={["fas", "user"]}
                         className="me-2"
@@ -153,7 +163,7 @@ const HeaderNav = () => {
                       Account Settings
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/notifications" className="dropdown-item">
                       <FontAwesomeIcon
                         icon={["fas", "bell"]}
@@ -161,7 +171,7 @@ const HeaderNav = () => {
                       />{" "}
                       Notifications
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link
                       className="dropdown-item d-flex align-items-center gap-2"

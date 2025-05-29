@@ -4,14 +4,24 @@ import "../styles/Dashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const userFeatures = [
+  // {
+  //   icon: "bi-calendar-event",
+  //   title: "My Events",
+  //   desc: "See all events you have registered for or are attending.",
+  //   link: "/my-events",
+  //   btn: "View My Events",
+  //   color: "primary",
+  // },
+
   {
-    icon: "bi-calendar-event",
-    title: "My Events",
-    desc: "See all events you have registered for or are attending.",
-    link: "/my-events",
-    btn: "View My Events",
+    icon: "bi-building",
+    title: "My Venues",
+    desc: "View all venues you have booked or registered for.",
+    link: "/my-venues",
+    btn: "View My Venues",
     color: "primary",
   },
+
   {
     icon: "bi-ticket-perforated",
     title: "My Tickets",
@@ -21,20 +31,21 @@ const userFeatures = [
     color: "info",
   },
   {
-    icon: "bi-building",
-    title: "My Venues",
-    desc: "View all venues you have booked or registered for.",
-    link: "/my-venues",
-    btn: "View My Venues",
-    color: "danger",
-  },
-  {
     icon: "bi-person-gear",
     title: "Account Settings",
     desc: "Update your profile, password, and notification preferences.",
     link: "/settings",
     btn: "Account Settings",
     color: "secondary",
+  },
+
+  {
+    icon: "bi-building",
+    title: "Browse Venues",
+    desc: "Find and book the perfect venue for your event.",
+    link: "/browse-venues",
+    btn: "Browse Venues",
+    color: "primary",
   },
 ];
 
@@ -112,7 +123,7 @@ const Dashboard = () => {
           <div className="col-md-4 mb-4">
             <Link to="/browse-venues" className="text-decoration-none">
               <div className="card shadow-sm border-0 h-100 animate__animated animate__fadeInUp">
-                <div className="card-body d-flex flex-column align-items-center justify-content-center py-4">
+                {/* <div className="card-body d-flex flex-column align-items-center justify-content-center py-4">
                   <FontAwesomeIcon
                     icon={["fas", "building"]}
                     className="mb-3 text-primary"
@@ -122,7 +133,7 @@ const Dashboard = () => {
                   <p className="text-secondary mb-0 text-center">
                     Find and book the perfect venue for your event.
                   </p>
-                </div>
+                </div> */}
               </div>
             </Link>
           </div>
