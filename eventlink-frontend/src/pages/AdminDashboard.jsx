@@ -12,14 +12,14 @@ const adminFeatures = [
     btn: "Create Venue",
     color: "success",
   },
-  // {
-  //   icon: "bi-calendar-plus",
-  //   title: "Create Event",
-  //   desc: "Add new events for users to register and attend.",
-  //   link: "/create-event",
-  //   btn: "Create Event",
-  //   color: "primary",
-  // },
+  {
+    icon: "bi-person",
+    title: "Normal Users",
+    desc: "View and manage all normal (non-admin) users.",
+    link: "/admin/normal-users",
+    btn: "View Users",
+    color: "primary",
+  },
   {
     icon: "bi-tags",
     title: "Create Category",

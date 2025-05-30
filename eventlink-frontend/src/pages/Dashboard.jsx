@@ -22,14 +22,14 @@ const userFeatures = [
     color: "primary",
   },
 
-  {
-    icon: "bi-ticket-perforated",
-    title: "My Tickets",
-    desc: "Access your tickets and QR codes for upcoming events.",
-    link: "/my-tickets",
-    btn: "View Tickets",
-    color: "info",
-  },
+  // {
+  //   icon: "bi-ticket-perforated",
+  //   title: "My Tickets",
+  //   desc: "Access your tickets and QR codes for upcoming events.",
+  //   link: "/my-tickets",
+  //   btn: "View Tickets",
+  //   color: "info",
+  // },
   {
     icon: "bi-person-gear",
     title: "Account Settings",

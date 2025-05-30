@@ -33,6 +33,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancel from "./pages/PaymentCancel";
 import MyVenues from "./pages/MyVenues";
 import Settings from "./pages/Settings";
+import AdminManageUsers from "./pages/AdminManageUsers";
 
 const BrowseEvents = lazy(() => import("./pages/BrowseEvents"));
 const EventDetails = lazy(() => import("./pages/EventDetails"));
@@ -158,6 +159,7 @@ function AppRoutes() {
               </PrivateRoute>
             }
           />
+          <Route path="/admin/manage-users" element={<AdminManageUsers />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

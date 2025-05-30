@@ -116,7 +116,7 @@ const HeaderNav = () => {
                           Create Event
                         </Link>
                       </li> */}
-                      <li>
+                      {/* <li>
                         <Link
                           to="/admin/create-ticket"
                           className="dropdown-item"
@@ -124,10 +124,10 @@ const HeaderNav = () => {
                           <FontAwesomeIcon
                             icon={["fa", "ticket"]}
                             className="me-2 text-info"
-                          />{" "}
+                          />{""}
                           Create Ticket
                         </Link>
-                      </li>
+                      </li> */}
                       <li>
                         <Link
                           to="/admin/create-venue"
