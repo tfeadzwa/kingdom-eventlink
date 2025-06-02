@@ -47,7 +47,7 @@ const Home = () => {
               className="display-3 fw-bold mb-3 text-primary"
               style={{ letterSpacing: "-1px" }}
             >
-              Welcome to EventLink
+              Welcome to Masvingo Eventlink
             </h1>
             <p
               className="lead text-secondary mb-4"

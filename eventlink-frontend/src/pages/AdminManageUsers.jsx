@@ -152,14 +152,29 @@ const AdminManageUsers = () => {
   };
 
   return (
-    <div className="container py-5 min-vh-100" style={{ background: "#f8f9fa" }}>
-      <Card className="shadow-lg border-0 mx-auto" style={{ maxWidth: 1100, borderRadius: 18 }}>
-        <Card.Header className="bg-white border-0 pb-0 d-flex align-items-center justify-content-between" style={{ borderTopLeftRadius: 18, borderTopRightRadius: 18 }}>
+    <div
+      className="container py-5 min-vh-100"
+      style={{ background: "#f8f9fa" }}
+    >
+      <Card
+        className="shadow-lg border-0 mx-auto"
+        style={{ maxWidth: 1100, borderRadius: 18 }}
+      >
+        <Card.Header
+          className="bg-white border-0 pb-0 d-flex align-items-center justify-content-between"
+          style={{ borderTopLeftRadius: 18, borderTopRightRadius: 18 }}
+        >
           <div>
             <h2 className="fw-bold mb-1 text-primary">Manage Users</h2>
-            <div className="text-secondary small">View, edit, add, or remove users from the platform.</div>
+            <div className="text-secondary small">
+              View, edit, add, or remove users from the platform.
+            </div>
           </div>
-          <Button variant="primary" onClick={() => setShowAdd(true)} className="d-flex align-items-center gap-2 fw-semibold rounded-pill px-4 py-2">
+          <Button
+            variant="primary"
+            onClick={() => setShowAdd(true)}
+            className="d-flex align-items-center gap-2 fw-semibold rounded-pill px-4 py-2"
+          >
             <i className="fa fa-user-plus"></i> Add User
           </Button>
         </Card.Header>
@@ -172,7 +187,10 @@ const AdminManageUsers = () => {
             </div>
           ) : (
             <div className="table-responsive">
-              <Table hover className="align-middle shadow-sm bg-white rounded admin-users-table">
+              <Table
+                hover
+                className="align-middle shadow-sm bg-white rounded admin-users-table"
+              >
                 <thead className="table-light">
                   <tr>
                     <th></th>
@@ -187,19 +205,39 @@ const AdminManageUsers = () => {
                   {users.map((user) => (
                     <tr key={user.id} className="admin-user-row">
                       <td>
-                        <div className="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style={{ width: 38, height: 38, fontWeight: 700, color: '#0d6efd', fontSize: 18 }}>
-                          {user.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2)}
+                        <div
+                          className="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
+                          style={{
+                            width: 38,
+                            height: 38,
+                            fontWeight: 700,
+                            color: "#0d6efd",
+                            fontSize: 18,
+                          }}
+                        >
+                          {user.name
+                            ?.split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .toUpperCase()
+                            .slice(0, 2)}
                         </div>
                       </td>
                       <td className="fw-semibold">{user.name}</td>
                       <td>{user.email}</td>
                       <td>
-                        <Badge bg={roleColors[user.role] || "secondary"} className="px-2 py-1 text-capitalize">
+                        <Badge
+                          bg={roleColors[user.role] || "secondary"}
+                          className="px-2 py-1 text-capitalize"
+                        >
                           {user.role}
                         </Badge>
                       </td>
                       <td>
-                        <Badge bg={user.is_verified ? "success" : "secondary"} className="px-2 py-1">
+                        <Badge
+                          bg={user.is_verified ? "success" : "secondary"}
+                          className="px-2 py-1"
+                        >
                           {user.is_verified ? "Verified" : "Unverified"}
                         </Badge>
                       </td>
@@ -280,7 +318,9 @@ const AdminManageUsers = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="editPassword">
-              <Form.Label>New Password (leave blank to keep unchanged)</Form.Label>
+              <Form.Label>
+                New Password (leave blank to keep unchanged)
+              </Form.Label>
               <Form.Control
                 type="password"
                 name="password"

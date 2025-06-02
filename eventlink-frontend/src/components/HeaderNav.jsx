@@ -21,7 +21,7 @@ const HeaderNav = () => {
             icon={["fas", "calendar-plus"]}
             className="me-2 text-primary"
           />
-          EventLink
+          Masvingo Eventlink
         </Link>
         <button
           className="navbar-toggler"
